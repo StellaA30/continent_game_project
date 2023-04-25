@@ -1,17 +1,32 @@
 package com.example.continent_game.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "continents")
 public class Continent {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String name;
-    private List<Country> countryList;
+
+    @JsonIgnoreProperties({"continent"})
+    @OneToMany(mappedBy = "continent")
+    private List<Country> countries;
+
+//    TODO: JOIN
+    @Column(name="games")
     private List<Game> gameList;
+
     public Continent (String name){
         this.name = name;
-        this.countryList = new ArrayList<>();
+        this.countries = new ArrayList<>();
         this.gameList = new ArrayList<>();
     }
     public Continent(){
@@ -39,12 +54,12 @@ public class Continent {
         this.name = name;
     }
 
-    public List<Country> getCountryList() {
-        return countryList;
+    public List<Country> getCountries() {
+        return countries;
     }
 
-    public void setCountryList(List<Country> countryList) {
-        this.countryList = countryList;
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
     }
 
     public List<Game> getGameList() {
