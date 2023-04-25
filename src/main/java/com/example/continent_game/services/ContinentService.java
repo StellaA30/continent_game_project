@@ -1,14 +1,10 @@
 package com.example.continent_game.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.continent_game.models.Continent;
-import com.example.continent_game.models.ContinentDTO;
-import com.example.continent_game.models.Country;
 import com.example.continent_game.repositories.ContinentRepository;
-import com.example.continent_game.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +33,10 @@ public class ContinentService {
     }
 
     //    ID TAKEN INTO CONSIDERATION IN CONTINENT CONTROLLER
-    public void updateContinent(Continent continent){
-        continentRepository.save(continent);
+    public void updateContinent(Continent continent, Long id){
+        Continent continentToUpdate = continentRepository.findById(id).get();
+        continentToUpdate.setName(continent.getName());
+        continentRepository.save(continentToUpdate);
     }
 
     public void removeContinent(Long id){
