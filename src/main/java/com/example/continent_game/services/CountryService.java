@@ -1,5 +1,6 @@
 package com.example.continent_game.services;
 
+import com.example.continent_game.models.Continent;
 import com.example.continent_game.models.Country;
 import com.example.continent_game.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class CountryService {
 
     //Create
 
-    public Country createCountry(String name, long GDP, String capital, int population) {
-        Country country = new Country(name, GDP, capital, population);
+    public Country createCountry(String name, long GDP, String capital, int population, Continent continent) {
+        Country country = new Country(name, GDP, capital, population, continent);
         return countryRepository.save(country);
 
     }
