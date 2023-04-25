@@ -1,5 +1,6 @@
 package com.example.continent_game.models;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Country {
     private List<Continent> continent;
 
     public Country(String name, long GDP, String capital, int population){
+
         this.name = name;
         this.GDP = GDP;
         this.capital = capital;
@@ -31,6 +33,7 @@ public class Country {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
