@@ -12,32 +12,37 @@ public class Game {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
     @Column
     private int score;
+
     @Column
     private boolean complete;
-    @JsonIgnoreProperties({"chocolates"})
-    private List<Continent> continentList;
-    @JsonIgnoreProperties({"chocolates"})
-    @ManyToMany
-    @JoinTable(
-            name = "chocolates_estates",
-            joinColumns = @JoinColumn(name = "chocolate_id"),
-            inverseJoinColumns = @JoinColumn(name = "estate_id")
-    )
-    private List<Player> playerList;
 
-    public Game (int score, boolean complete){
+
+   @ManyToOne
+   @JoinColumn(name = "continent_id", nullable = false)
+    private Continent continent;
+
+    @ManyToOne
+    @JoinColumn(name = "player_id", nullable = false)
+    private Player player;
+
+    public Game (int score, boolean complete, Continent continent, Player player){
         this.score = score;
         this.complete = complete;
-        this.continentList = new ArrayList<>();
-        this.playerList = new ArrayList<>();
+        this.continent = continent;
+        this.player = player;
     }
-//    Methods
+
+
+    //Default constructor
+    public Game(){
+
+    }
 
 
 //    Getters/Setters
-
 
     public Long getId() {
         return id;
@@ -63,24 +68,21 @@ public class Game {
         this.complete = complete;
     }
 
-    public List<Continent> getContinentList() {
-        return continentList;
+    public Continent getContinent() {
+        return continent;
     }
 
-    public void setContinentList(List<Continent> continentList) {
-        this.continentList = continentList;
+    public void setContinent(Continent continent) {
+        this.continent = continent;
     }
 
-    public List<Player> getPlayerList() {
-        return playerList;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
-//    khsguyhgs
-
-
 
 
 //
