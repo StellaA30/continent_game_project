@@ -17,11 +17,6 @@ public class Game {
     @Column
     private boolean complete;
     @JsonIgnoreProperties({"chocolates"})
-    @OneToMany
-            name = "chocolates_estates",
-            joinColumns = @JoinColumn(name = "chocolate_id"),
-            inverseJoinColumns = @JoinColumn(name = "estate_id")
-    )
     private List<Continent> continentList;
     @JsonIgnoreProperties({"chocolates"})
     @ManyToMany
