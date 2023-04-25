@@ -7,20 +7,32 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@Entity
+@Table(name = "players")
 public class Player {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
+
+    @Column(name = "name")
     private String name;
-    private LinkedList<Game> gameLinkedList;
+
+    @OneToMany(mappedBy = "player")
+    @JsonIgnoreProperties({"player"})
+    private List<Game> games;
 
     public Player (String name){
         this.name = name;
-        this.gameLinkedList = new LinkedList<>();
+        this.games = new ArrayList<>();
     }
+
+    public Player(){}
 //    Methods
 
 
 //    Getters/Setters
-
 
     public Long getId() {
         return id;
@@ -38,16 +50,13 @@ public class Player {
         this.name = name;
     }
 
-    public LinkedList<Game> getGameLinkedList() {
-        return gameLinkedList;
+    public List<Game> getGames() {
+        return games;
     }
 
-    public void setGameLinkedList(LinkedList<Game> gameLinkedList) {
-        this.gameLinkedList = gameLinkedList;
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
-
-
-
 
 
 //
