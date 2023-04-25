@@ -1,24 +1,42 @@
 package com.example.continent_game.models;
 
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "countries")
 public class Country {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
-    private String name;
-    private long GDP;
-    private String capital;
-    private int population;
-    private List<Continent> continent;
 
-    public Country(String name, long GDP, String capital, int population){
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "GDP")
+    private long GDP;
+
+    @Column(name = "capital")
+    private String capital;
+
+    @Column(name = "population")
+    private int population;
+
+    @ManyToOne
+    @JoinColumn(name = "continent_id", nullable = false)
+    private Continent continent;
+
+    public Country(String name, long GDP, String capital, int population, Continent continent){
 
         this.name = name;
         this.GDP = GDP;
         this.capital = capital;
         this.population = population;
-        this.continent = new ArrayList<>();
+        this.continent = continent;
     }
     public Country(){
 
@@ -27,13 +45,11 @@ public class Country {
 
 //    Getters/Setters
 
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-
         this.id = id;
     }
 
@@ -69,17 +85,13 @@ public class Country {
         this.population = population;
     }
 
-    public List<Continent> getContinent() {
+    public Continent getContinent() {
         return continent;
     }
 
-    public void setContinent(List<Continent> continent) {
+    public void setContinent(Continent continent) {
         this.continent = continent;
     }
-
-
-
-
 
 
 //    @Entity
