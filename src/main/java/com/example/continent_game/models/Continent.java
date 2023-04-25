@@ -20,8 +20,8 @@ public class Continent {
     @OneToMany(mappedBy = "continent")
     private List<Country> countries;
 
-//    TODO: JOIN
-    @Column(name="games")
+    @JsonIgnoreProperties({"continent"})
+    @OneToMany(mappedBy = "continent")
     private List<Game> gameList;
 
     public Continent (String name){
