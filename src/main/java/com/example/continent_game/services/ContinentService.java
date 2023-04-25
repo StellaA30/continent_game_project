@@ -1,4 +1,4 @@
-package org.example.services;
+package com.example.continent_game.services;
 
 import java.util.ArrayList;
 import java.util.List;

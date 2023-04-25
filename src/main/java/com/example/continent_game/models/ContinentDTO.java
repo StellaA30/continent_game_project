@@ -38,4 +38,6 @@ public class ContinentDTO {
     public void setGameIds(List<Long> gameIds) {
         this.gameIds = gameIds;
     }
+
+
 }
