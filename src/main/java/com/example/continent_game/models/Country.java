@@ -1,39 +1,39 @@
 package com.example.continent_game.models;
 
-import java.lang.ref.PhantomReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Country {
-
-    private long id;
+    private Long id;
     private String name;
     private long GDP;
     private String capital;
     private int population;
-    private Continent continent;
+    private List<Continent> continent;
 
+    public Country(String name, long GDP, String capital, int population){
 
-    public Country(String name, long GDP, String capital, int population, Continent continent){
         this.name = name;
         this.GDP = GDP;
         this.capital = capital;
         this.population = population;
-        this.continent = continent;
-
-
-
-
-
+        this.continent = new ArrayList<>();
     }
-
     public Country(){
 
     }
+//    Methods
 
-    public long getId() {
+//    Getters/Setters
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
+
         this.id = id;
     }
 
@@ -69,11 +69,11 @@ public class Country {
         this.population = population;
     }
 
-    public Continent getContinent() {
+    public List<Continent> getContinent() {
         return continent;
     }
 
-    public void setContinent(Continent continent) {
+    public void setContinent(List<Continent> continent) {
         this.continent = continent;
     }
 }

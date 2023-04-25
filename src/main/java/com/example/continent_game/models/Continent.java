@@ -5,24 +5,29 @@ import java.util.List;
 
 public class Continent {
 
-    private long id;
+    private Long id;
     private String name;
-    private List<Country> countries;
-    private List<Game> games;
-
-    public Continent (String name) {
+    private List<Country> countryList;
+    private List<Game> gameList;
+    public Continent (String name){
         this.name = name;
-        this.countries = new ArrayList<>();
-        this.games = new ArrayList<>();
+        this.countryList = new ArrayList<>();
+        this.gameList = new ArrayList<>();
     }
+    public Continent(){
 
-    public Continent(){}
+    }
+//    Methods
 
-    public long getId() {
+
+//    Getters/Setters
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -34,19 +39,19 @@ public class Continent {
         this.name = name;
     }
 
-    public List<Country> getCountries() {
-        return countries;
+    public List<Country> getCountryList() {
+        return countryList;
     }
 
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
+    public void setCountryList(List<Country> countryList) {
+        this.countryList = countryList;
     }
 
-    public List<Game> getGames() {
-        return games;
+    public List<Game> getGameList() {
+        return gameList;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
     }
 }
