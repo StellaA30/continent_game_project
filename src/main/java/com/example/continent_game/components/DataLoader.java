@@ -70,7 +70,7 @@ public class DataLoader implements ApplicationRunner {
                 "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Comoros",
                 "Democratic Republic of the Congo", "Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea",
                 "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia",
-                "The Ghana", "Guinea", "Guinea-Bissau", "Chad", "Ivory Coast",
+                "Ghana", "Guinea", "Guinea-Bissau", "Chad", "Ivory Coast",
                 "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar",
                 "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco",
                 "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda",
