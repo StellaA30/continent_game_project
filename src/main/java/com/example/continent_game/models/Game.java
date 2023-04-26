@@ -41,13 +41,27 @@ public class Game {
 
     )
 
+
     private List<Country> countries;
+    private List<Country> guesses;
+
+    private List<Guess> incorrectGuesses;
+
+    private int penalty;
+
+    //           guesses
+    // game_id             country_id
+
+
     public Game (int score, boolean complete, Continent continent, Player player){
         this.score = score;
         this.complete = complete;
         this.continent = continent;
         this.player = player;
         this.countries = new ArrayList<>();
+        this.guesses = new ArrayList<>();
+        this.incorrectGuesses = new ArrayList<>();
+        this.penalty = penalty;
     }
 
 
@@ -61,18 +75,16 @@ public class Game {
 
 
 
-//    get countries for game
-    public List<Country> getCountriesForGame(){
-        return this.continent.getCountries();
-    }
-
-//    maxscore
-    public int maxScore(){
-        return this.continent.getCountries().size();
-    }
-
-
 //    Getters/Setters
+
+
+    public int getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(int penalty) {
+        this.penalty = penalty;
+    }
 
     public List<Country> getCountries() {
         return countries;
@@ -81,6 +93,34 @@ public class Game {
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
+
+    public List<Country> getGuesses() {
+        return guesses;
+    }
+
+    public void setGuesses(List<Country> guesses) {
+        this.guesses = guesses;
+    }
+
+    public void addGuessToGuessesList(Country guess){
+        this.guesses.add(guess);
+    }
+
+    public List<Guess> getIncorrectGuesses() {
+        return incorrectGuesses;
+    }
+
+    public void setIncorrectGuesses(List<Guess> incorrectGuesses) {
+        this.incorrectGuesses = incorrectGuesses;
+    }
+
+
+    public void addGuessToIncorrectGuessesList(Guess guess) {
+        this.incorrectGuesses.add(guess);
+    }
+
+
+
 
     public Long getId() {
         return id;
@@ -122,6 +162,15 @@ public class Game {
         this.player = player;
     }
 
+    //    get countries for game
+    public List<Country> getCountriesForGame(){
+        return this.continent.getCountries();
+    }
+
+    //    maxscore
+    public int maxScore(){
+        return this.continent.getCountries().size();
+    }
 
 
 
