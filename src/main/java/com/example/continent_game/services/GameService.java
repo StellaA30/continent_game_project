@@ -1,23 +1,117 @@
 package com.example.continent_game.services;
 
-import com.example.continent_game.models.Game;
-import com.example.continent_game.models.Player;
+import com.example.continent_game.models.*;
 import com.example.continent_game.repositories.GameRepository;
 import com.example.continent_game.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class GameService {
+
     @Autowired
     GameRepository gameRepository;
     @Autowired
     PlayerService playerService;
     @Autowired
     CountryService countryService;
+    private String currentWord;
+    //    Array of player's guesses
+    private ArrayList<Country> guessedCountryList;
+    //    Total countries within a given continent
+    private ArrayList<Country> totalCountryList;
+
+    public GameService (){
+
+    }
+
+    public String getCurrentWord() {
+        return currentWord;
+    }
+
+    public void setCurrentWord(String currentWord) {
+        this.currentWord = currentWord;
+    }
+
+    public ArrayList<Country> getGuessedCountryList() {
+        return guessedCountryList;
+    }
+
+    public void setGuessedCountryList(ArrayList<Country> guessedCountryList) {
+        this.guessedCountryList = guessedCountryList;
+    }
+
+    public ArrayList<Country> getTotalCountryList() {
+        return totalCountryList;
+    }
+
+    public void setTotalCountryList(ArrayList<Country> totalCountryList) {
+        this.totalCountryList = totalCountryList;
+    }
+
+
+
+    public Reply processGuess(Guess guess, Long id){
+//        find correct game
+        Game game = gameRepository.findById(id).get();
+//        Check if game is already completed
+        if (game.isComplete()){
+            return new Reply(
+                    false,
+                    getCurrentWord(),
+                    guessedCountryList.size() + "/"+totalCountryList.size(),
+                    String.format("Already finished game %d", game.getId())
+            );
+        }
+//        Check if country has been guessed already
+        if(this.guessedCountryList.contains(guess.getCountryName())){
+            return new Reply(false, this.currentWord, guessedCountryList.size() + "/"+totalCountryList.size(),String.format("Already guessed %s", guess.getCountryName()));
+        }
+    }
+
+
+    private void addToGuessedCountryList(){
+//        add guess to the total country list if guess is contained in the totalCountryList
+        Guess guess = new Guess();
+        if(totalCountryList.contains(guess)){
+//            find id of country indicated by guess
+//            add country located by id to guessedCountryList
+            guessedCountryList.add();
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //get all games
     public List<Game> getAllGames(){
@@ -35,6 +129,14 @@ public class GameService {
 
 
     //UPDATE:  can we update a game -- ask Instructor??
+    public void updateGame(Game game, Long id){
+            Game gameToUpdate = gameRepository.findById(id).get();
+            gameToUpdate.setScore(game.getScore());
+            gameToUpdate.setComplete(game.isComplete());
+            gameToUpdate.setContinent(game.getContinent());
+            gameToUpdate.setPlayer(game.getPlayer());
+            gameRepository.save(gameToUpdate);
+        }
 
 
 
