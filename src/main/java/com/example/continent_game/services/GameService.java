@@ -35,9 +35,23 @@ public class GameService {
 
 
 
-    public Reply processGuess(Guess guess, Long id){
+    public void processGuess(Guess guess, Long id) {
 //        Find correct game
+// Add correct guess to guessedCountryList and increments score by 1 for each correct guess
+// - this is also used when getting the score (size of list)
         Game game = gameRepository.findById(id).get();
+        for (Country countryInTheGame : game.getCountriesForGame()) {
+            if (guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
+                game.addGuessToGuessesList(countryInTheGame);
+                game.setScore(game.getScore() + 1);
+            } else {
+                game.addGuessToIncorrectGuessesList(guess);
+                game.setPenalty(game.getPenalty() + 1);
+            }
+        }
+    }
+//
+//        Game game = gameRepository.findById(id).get();
 
 ////        Check if game is already completed
 //        if (game.isComplete()){
@@ -65,29 +79,28 @@ public class GameService {
 //        Check for win
 //             finalScore - update score property in the game that's being/been played
 
-    }
 
 
 
 
 
 
-// Add correct guess to guessedCountryList and increments score by 1 for each correct guess
-// - this is also used when getting the score (size of list)
 
 
-    private void addGuessToGuessesList(Guess guess, Long id){
-        Game game = gameRepository.findById(id).get();
-        for(Country countryInTheGame : game.getCountriesForGame()){
-            if(guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
-                game.addGuessToGuessesList(countryInTheGame);
-                game.setScore(game.getScore() + 1);
-            }   else {
-                game.addGuessToIncorrectGuessesList(guess);
-                game.setPenalty(game.getPenalty() + 1);
-            }
-        }
-    }
+
+
+//    private void addGuessToGuessesList(Guess guess, Long id){
+//        Game game = gameRepository.findById(id).get();
+//        for(Country countryInTheGame : game.getCountriesForGame()){
+//            if(guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
+//                game.addGuessToGuessesList(countryInTheGame);
+//                game.setScore(game.getScore() + 1);
+//            }   else {
+//                game.addGuessToIncorrectGuessesList(guess);
+//                game.setPenalty(game.getPenalty() + 1);
+//            }
+//        }
+//    }
 
 
 
