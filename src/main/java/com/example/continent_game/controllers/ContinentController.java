@@ -55,6 +55,21 @@ public class ContinentController {
 //    }
     //Detail: Key (id)=(1) is still referenced from table "countries".
 
+    //update
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Continent> updateContinent(
+            @PathVariable Long id,
+            @RequestBody Continent continent){
+        continentService.updateContinent(continent, id);
+        return new ResponseEntity<>(continent, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Continent> deleteContinentAndCountries(@PathVariable Long id){
+        continentService.deleteContinentAndCountries(id);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
 
 
 
