@@ -22,9 +22,10 @@ public class GameService {
     CountryService countryService;
 
     @Autowired
+    GameListService gameListService;
+
+    @Autowired
     CountryRepository countryRepository;
-
-
 
 
 
@@ -47,16 +48,8 @@ public class GameService {
         //countryrepo derived query, full country object easier to compare to than just their name
         Country guessedCountry = countryRepository.findCountryByNameIgnoreCase(guess.getCountryName());
 
-//      REPLY PROPERTIES
-//        int currentScore;
-//        int maxScore;
-//        int penalty;
-//        String message;
-
-
         //notification for user saying we've already guessed it, pass as String
         if (game.getGuesses().contains(guessedCountry)) {
-//            TODO: concatentaitoin
             return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), guessedCountry + " is not in " + game.getContinent() + " .");
         }
         if (game.getCountriesForGame().contains(guessedCountry)) {
@@ -81,6 +74,26 @@ public class GameService {
         gameRepository.save(game);
         return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "That's incorrect. You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
         //eg. you could prompt them how many correct guesses are left, or how many chances you have left
+    }
+
+    public Reply terminateGame(Long id){
+        Game game = gameRepository.findById(id).get();
+        game.setComplete(true);
+        gameRepository.save(game);
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Game ended. You scored " + game.getScore() + " out of " + game.maxScore() + ".");
+    }
+
+    public Game createNewGame(Long playerId){
+//        generate random continent
+        Continent gameContinent = gameListService.getRandomContinent();
+//        find a player by id
+        Player gamePlayer = playerService.getPlayerById(playerId).get();
+//        create game object with found player added
+        Game newGame = new Game(gameContinent, gamePlayer);
+//        save the game
+        gameRepository.save(newGame);
+//        return the game
+        return newGame;
     }
 
     //find the country by the name
@@ -117,57 +130,6 @@ public class GameService {
 
 
 
-
-
-
-
-
-
-
-
-//    private void addGuessToGuessesList(Guess guess, Long id){
-//        Game game = gameRepository.findById(id).get();
-//        for(Country countryInTheGame : game.getCountriesForGame()){
-//            if(guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
-//                game.addGuessToGuessesList(countryInTheGame);
-//                game.setScore(game.getScore() + 1);
-//            }   else {
-//                game.addGuessToIncorrectGuessesList(guess);
-//                game.setPenalty(game.getPenalty() + 1);
-//            }
-//        }
-//    }
-
-
-
-// TODO: add in feature to logic if we have time - if they add three wrong guesses in total (not necessarily in a row), end game
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //get all games
     public List<Game> getAllGames(){
         return gameRepository.findAll();
@@ -184,15 +146,14 @@ public class GameService {
 
 
     //UPDATE:  can we update a game -- ask Instructor??
-    public void updateGame(Game game, Long id){
-            Game gameToUpdate = gameRepository.findById(id).get();
-            gameToUpdate.setScore(game.getScore());
-            gameToUpdate.setComplete(game.isComplete());
-            gameToUpdate.setContinent(game.getContinent());
-            gameToUpdate.setPlayer(game.getPlayer());
-            gameRepository.save(gameToUpdate);
-        }
-
+//    public void updateGame(Game game, Long id){
+//            Game gameToUpdate = gameRepository.findById(id).get();
+//            gameToUpdate.setScore(game.getScore());
+//            gameToUpdate.setComplete(game.isComplete());
+//            gameToUpdate.setContinent(game.getContinent());
+//            gameToUpdate.setPlayer(game.getPlayer());
+//            gameRepository.save(gameToUpdate);
+//        }
 
 
     //  DELETE:
@@ -210,50 +171,6 @@ public class GameService {
 //            .removeEstate(foundEstate);
 //    }
 
-
-//
-//
-//    @Service
-//    public class GameService {
-//
-//        @Autowired
-//        GameRepository gameRepository;
-//        @Autowired
-//        PlayerRepository playerRepository;
-//
-//        public List<Game> findAllGames(){
-//            return gameRepository.findAll();
-//        }
-//
-//        public Game findGame(Long id){
-//            return gameRepository.findById(id).get();
-//        }
-//
-//        public void saveGame(Game game){
-//            gameRepository.save(game);
-//        }
-//
-//        public void removeGameFromPlayers(Long id){
-//            Game foundGame = gameRepository.getById(id);
-//            for (Player player : foundGame.getPlayerList()) {
-//                player.removeGame(foundGame);
-//                playerRepository.save(player);
-//            }
-//            gameRepository.deleteById(id);
-//        }
-//
-//        public void deleteGame(Long id){
-//            gameRepository.deleteById(id);
-//        }
-//
-//        public void updateGame(Game game, Long id){
-//            Game gameToUpdate = gameRepository.findById(id).get();
-//            gameToUpdate.setScore(game.getScore());
-//            gameToUpdate.setComplete(game.isComplete());
-//            gameToUpdate.setContinentList(game.getContinentList());
-//            gameRepository.save(gameToUpdate);
-//        }
-//    }
 
 
 

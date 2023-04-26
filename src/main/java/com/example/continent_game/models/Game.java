@@ -52,9 +52,9 @@ public class Game {
     // game_id             country_id
 
 
-    public Game (boolean complete, Continent continent, Player player){
+    public Game (Continent continent, Player player){
         this.score = 0;
-        this.complete = complete;
+        this.complete = false;
         this.continent = continent;
         this.player = player;
         this.guesses = new ArrayList<>();
