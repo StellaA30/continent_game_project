@@ -1,6 +1,7 @@
 package com.example.continent_game.services;
 
 import com.example.continent_game.models.*;
+import com.example.continent_game.repositories.CountryRepository;
 import com.example.continent_game.repositories.GameRepository;
 import com.example.continent_game.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class GameService {
     @Autowired
     CountryService countryService;
 
+    @Autowired
+    CountryRepository countryRepository;
+
 
 
 
@@ -35,21 +39,45 @@ public class GameService {
 
 
 
-    public void processGuess(Guess guess, Long id) {
+    public Reply processGuess(Guess guess, Long id) {
 //        Find correct game
 // Add correct guess to guessedCountryList and increments score by 1 for each correct guess
 // - this is also used when getting the score (size of list)
         Game game = gameRepository.findById(id).get();
-        for (Country countryInTheGame : game.getCountriesForGame()) {
-            if (guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
-                game.addGuessToGuessesList(countryInTheGame);
-                game.setScore(game.getScore() + 1);
-            } else {
-                game.addGuessToIncorrectGuessesList(guess);
-                game.setPenalty(game.getPenalty() + 1);
-            }
+        //countryrepo derived query, full country object easier to compare to than just their name
+        Country guessedCountry = countryRepository.findCountryByNameIgnoreCase(guess.getCountryName());
+
+        //notification for user saying we've already guessed it, pass as String
+        if (game.getGuesses().contains(guessedCountry)) {
+            return new Reply();
         }
+        if (game.getCountriesForGame().contains(guessedCountry)) {
+            game.addGuessToGuessesList(guessedCountry);
+            game.setScore(game.getScore() + 1);
+            //check if game.getScore() = game.getCountries.size
+            if (game.getScore() == game.maxScore()) {
+                game.setComplete(true);
+                gameRepository.save(game);
+                return new Reply();//(>^_^)>
+            }
+            gameRepository.save(game);//update guess and list
+            return new Reply();
+        }
+        game.addGuessToGuessesList(guessedCountry);
+        game.setPenalty(game.getPenalty() + 1);
+        if (game.getPenalty() == 5) {
+            game.setComplete(true);
+            gameRepository.save(game);
+            return new Reply();//Q_____Q
+        }
+        gameRepository.save(game);
+        return new Reply();
+        //eg. you could prompt them how many correct guesses are left, or how many chances you have left
     }
+
+    //find the country by the name
+    //game.getCountries().contains(foundCountry)
+    //game.getGuesses()
 //
 //        Game game = gameRepository.findById(id).get();
 

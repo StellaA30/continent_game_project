@@ -32,7 +32,7 @@ public class Game {
 
     @JsonIgnoreProperties({"games"})
     @ManyToMany
-    @JoinTable(name = "countries_games",
+    @JoinTable(name = "guesses",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "country_id")
 
@@ -40,28 +40,26 @@ public class Game {
 
 
     )
-
-
-    private List<Country> countries;
     private List<Country> guesses;
 
-    private List<Guess> incorrectGuesses;
 
+//    private List<Guess> incorrectGuesses;
+
+    @Column
     private int penalty;
 
     //           guesses
     // game_id             country_id
 
 
-    public Game (int score, boolean complete, Continent continent, Player player){
-        this.score = score;
+    public Game (boolean complete, Continent continent, Player player){
+        this.score = 0;
         this.complete = complete;
         this.continent = continent;
         this.player = player;
-        this.countries = new ArrayList<>();
         this.guesses = new ArrayList<>();
-        this.incorrectGuesses = new ArrayList<>();
-        this.penalty = penalty;
+//        this.incorrectGuesses = new ArrayList<>();
+        this.penalty = 0;
     }
 
 
@@ -86,13 +84,13 @@ public class Game {
         this.penalty = penalty;
     }
 
-    public List<Country> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
-    }
+//    public List<Country> getCountries() {
+//        return countries;
+//    }
+//
+//    public void setCountries(List<Country> countries) {
+//        this.countries = countries;
+//    }
 
     public List<Country> getGuesses() {
         return guesses;
@@ -105,20 +103,6 @@ public class Game {
     public void addGuessToGuessesList(Country guess){
         this.guesses.add(guess);
     }
-
-    public List<Guess> getIncorrectGuesses() {
-        return incorrectGuesses;
-    }
-
-    public void setIncorrectGuesses(List<Guess> incorrectGuesses) {
-        this.incorrectGuesses = incorrectGuesses;
-    }
-
-
-    public void addGuessToIncorrectGuessesList(Guess guess) {
-        this.incorrectGuesses.add(guess);
-    }
-
 
 
 

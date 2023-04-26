@@ -1,6 +1,10 @@
 package com.example.continent_game.models;
 
 public class Reply {
+
+    //currentscore,maxscore,penalty,message
+    //overhaul reply, make sure gameservice gives appropriate responses
+    //
     private boolean correct;
     private String countState; //displays the {correct}/{total_countries}
     private String message;
@@ -49,3 +53,4 @@ public class Reply {
         this.message = message;
     }
 }
+

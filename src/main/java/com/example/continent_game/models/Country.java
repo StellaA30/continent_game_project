@@ -35,8 +35,8 @@ public class Country {
 //    create many to many (with game class) - game is the owner
 
 
-    @JsonIgnoreProperties({"countries"})
-    @ManyToMany(mappedBy = "countries")
+    @JsonIgnoreProperties({"guesses"})
+    @ManyToMany(mappedBy = "guesses")
     private List<Game> games;
 
 
