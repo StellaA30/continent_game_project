@@ -14,6 +14,10 @@ import java.util.Optional;
 public class GameService {
     @Autowired
     GameRepository gameRepository;
+    @Autowired
+    PlayerService playerService;
+    @Autowired
+    CountryService countryService;
 
     //get all games
     public List<Game> getAllGames(){
