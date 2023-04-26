@@ -19,51 +19,54 @@ public class GameService {
     PlayerService playerService;
     @Autowired
     CountryService countryService;
-    private String currentWord;
-    //    Array of player's guesses
-    private ArrayList<Country> guessedCountryList;
-    //    Total countries within a given continent
-    private ArrayList<Country> totalCountryList;
+
+
+
+////    //    Array of player's guesses
+//    private ArrayList<Country> guessedCountryList;
+//    //    Total countries within a given continent
+//    private ArrayList<Country> totalCountryList;
 
     public GameService (){
 
     }
-
-    public String getCurrentWord() {
-        return currentWord;
-    }
-
-    public void setCurrentWord(String currentWord) {
-        this.currentWord = currentWord;
-    }
-
-    public ArrayList<Country> getGuessedCountryList() {
-        return guessedCountryList;
-    }
-
-    public void setGuessedCountryList(ArrayList<Country> guessedCountryList) {
-        this.guessedCountryList = guessedCountryList;
-    }
-
-    public ArrayList<Country> getTotalCountryList() {
-        return totalCountryList;
-    }
-
-    public void setTotalCountryList(ArrayList<Country> totalCountryList) {
-        this.totalCountryList = totalCountryList;
-    }
+//
+//    public String getCurrentWord() {
+//        return currentWord;
+//    }
+//
+//    public void setCurrentWord(String currentWord) {
+//        this.currentWord = currentWord;
+//    }
+//
+//    public ArrayList<Country> getGuessedCountryList() {
+//        return guessedCountryList;
+//    }
+//
+//    public void setGuessedCountryList(ArrayList<Country> guessedCountryList) {
+//        this.guessedCountryList = guessedCountryList;
+//    }
+//
+//    public ArrayList<Country> getTotalCountryList() {
+//        return totalCountryList;
+//    }
+//
+//    public void setTotalCountryList(ArrayList<Country> totalCountryList) {
+//        this.totalCountryList = totalCountryList;
+//    }
 
 
 
     public Reply processGuess(Guess guess, Long id){
-//        find correct game
+//        Find correct game
         Game game = gameRepository.findById(id).get();
+
 //        Check if game is already completed
         if (game.isComplete()){
             return new Reply(
                     false,
                     getCurrentWord(),
-                    guessedCountryList.size() + "/"+totalCountryList.size(),
+                    guessedCountryList.size() + "/" + totalCountryList.size(),
                     String.format("Already finished game %d", game.getId())
             );
         }
@@ -71,21 +74,36 @@ public class GameService {
         if(this.guessedCountryList.contains(guess.getCountryName())){
             return new Reply(false, this.currentWord, guessedCountryList.size() + "/"+totalCountryList.size(),String.format("Already guessed %s", guess.getCountryName()));
         }
+
+
+//        Handle correct guess
+
+
+
+
+//        Check for win
+//             finalScore - update score property in the game that's being/been played
+
     }
 
 
-    private void addToGuessedCountryList(){
-//        add guess to the total country list if guess is contained in the totalCountryList
-        Guess guess = new Guess();
-        if(totalCountryList.contains(guess)){
-//            find id of country indicated by guess
-//            add country located by id to guessedCountryList
-            guessedCountryList.add();
 
+
+
+
+// Add correct guess to guessedCountryList - this is also used when getting the score (size of list)
+    private void addToGuessedCountryList(Guess guess){
+        for(Country countryInTheGame : game.){
+            if(guess.getCountryName().toLowerCase().equals(countryInTheGame.getName().toLowerCase())) {
+                guessedCountryList.add(countryInTheGame);
+            }
         }
     }
 
 
+
+
+// TODO: add in feature to logic if we have time - if they add three wrong guesses in total (not necessarily in a row), end game
 
 
 

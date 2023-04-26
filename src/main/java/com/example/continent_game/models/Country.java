@@ -30,6 +30,10 @@ public class Country {
     @JoinColumn(name = "continent_id", nullable = false)
     private Continent continent;
 
+
+//    create many to many (with game class) - game is the owner
+
+
     public Country(String name, long GDP, String capital, int population, Continent continent){
 
         this.name = name;

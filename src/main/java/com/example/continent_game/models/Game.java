@@ -36,9 +36,24 @@ public class Game {
     }
 
 
+//    create many to many (with country class) - game is the owner
+
+
     //Default constructor
     public Game(){
 
+    }
+
+
+
+//    get countries for game
+    public List<Country> getCountriesForGame(){
+        return this.continent.getCountries();
+    }
+
+//    maxscore
+    public int maxScore(){
+        return this.continent.getCountries().size();
     }
 
 
@@ -83,6 +98,8 @@ public class Game {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+
 
 
 //
