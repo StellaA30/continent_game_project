@@ -1,6 +1,7 @@
 package com.example.continent_game.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -34,6 +35,11 @@ public class Country {
 //    create many to many (with game class) - game is the owner
 
 
+    @JsonIgnoreProperties({"countries"})
+    @ManyToMany(mappedBy = "countries")
+    private List<Game> games;
+
+
     public Country(String name, long GDP, String capital, int population, Continent continent){
 
         this.name = name;
@@ -41,13 +47,24 @@ public class Country {
         this.capital = capital;
         this.population = population;
         this.continent = continent;
+        this.games = new ArrayList<>();
     }
     public Country(){
 
     }
+
 //    Methods
 
 //    Getters/Setters
+
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
 
     public Long getId() {
         return id;

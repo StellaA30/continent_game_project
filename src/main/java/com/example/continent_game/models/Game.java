@@ -28,15 +28,30 @@ public class Game {
     @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
+    //    create many to many (with country class) - game is the owner
+
+    @JsonIgnoreProperties({"games"})
+    @ManyToMany
+    @JoinTable(name = "countries_games",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id")
+
+
+
+
+    )
+
+    private List<Country> countries;
     public Game (int score, boolean complete, Continent continent, Player player){
         this.score = score;
         this.complete = complete;
         this.continent = continent;
         this.player = player;
+        this.countries = new ArrayList<>();
     }
 
 
-//    create many to many (with country class) - game is the owner
+
 
 
     //Default constructor
@@ -58,6 +73,14 @@ public class Game {
 
 
 //    Getters/Setters
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
 
     public Long getId() {
         return id;
