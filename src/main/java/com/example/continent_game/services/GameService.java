@@ -47,9 +47,17 @@ public class GameService {
         //countryrepo derived query, full country object easier to compare to than just their name
         Country guessedCountry = countryRepository.findCountryByNameIgnoreCase(guess.getCountryName());
 
+//      REPLY PROPERTIES
+//        int currentScore;
+//        int maxScore;
+//        int penalty;
+//        String message;
+
+
         //notification for user saying we've already guessed it, pass as String
         if (game.getGuesses().contains(guessedCountry)) {
-            return new Reply();
+//            TODO: concatentaitoin
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), guessedCountry + " is not in " + game.getContinent() + " .");
         }
         if (game.getCountriesForGame().contains(guessedCountry)) {
             game.addGuessToGuessesList(guessedCountry);
@@ -58,20 +66,20 @@ public class GameService {
             if (game.getScore() == game.maxScore()) {
                 game.setComplete(true);
                 gameRepository.save(game);
-                return new Reply();//(>^_^)>
+                return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've found all the countries in " + game.getContinent() + "! (>^_^)>");//(>^_^)>
             }
             gameRepository.save(game);//update guess and list
-            return new Reply();
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "That's correct! Can you guess any more?");
         }
         game.addGuessToGuessesList(guessedCountry);
         game.setPenalty(game.getPenalty() + 1);
         if (game.getPenalty() == 5) {
             game.setComplete(true);
             gameRepository.save(game);
-            return new Reply();//Q_____Q
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect, game over. You've reached the maximum number of penalties." + game.getScore());//Q_____Q
         }
         gameRepository.save(game);
-        return new Reply();
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "That's incorrect. You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
         //eg. you could prompt them how many correct guesses are left, or how many chances you have left
     }
 

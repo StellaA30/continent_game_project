@@ -2,47 +2,48 @@ package com.example.continent_game.models;
 
 public class Reply {
 
-    //currentscore,maxscore,penalty,message
-    //overhaul reply, make sure gameservice gives appropriate responses
-    //
-    private boolean correct;
-    private String countState; //displays the {correct}/{total_countries}
+    private int currentScore;
+    private int maxScore;
+    private int penalty;
     private String message;
-    private String currentWord;
 
-    public Reply(boolean correct, String currentWord, String countState, String message) {
-        this.correct = correct;
-        this.currentWord = currentWord;
-        this.countState = countState;
+
+    public Reply(int currentScore, int maxScore, int penalty, String message) {
+        this.currentScore = currentScore;
+        this.maxScore = maxScore;
+        this.penalty = penalty;
         this.message = message;
     }
+
 
     public Reply() {
         //default constructor
     }
 
-    public boolean isCorrect() {
-        return correct;
+
+//    Getters & Setters
+    public int getCurrentScore() {
+        return currentScore;
     }
 
-    public void setCorrect(boolean correct) {
-        this.correct = correct;
+    public void setCurrentScore(int currentScore) {
+        this.currentScore = currentScore;
     }
 
-    public String getCurrentWord() {
-        return currentWord;
+    public int getMaxScore() {
+        return maxScore;
     }
 
-    public void setCurrentWord(String currentWord) {
-        this.currentWord = currentWord;
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
     }
 
-    public String getCountState() {
-        return countState;
+    public int getPenalty() {
+        return penalty;
     }
 
-    public void setCountState(String countState) {
-        this.countState = countState;
+    public void setPenalty(int penalty) {
+        this.penalty = penalty;
     }
 
     public String getMessage() {
