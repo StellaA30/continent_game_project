@@ -15,7 +15,7 @@ public class GameListService {
     //get a random continent from the list of continents
     public Continent getRandomContinent(){
         Random randomId = new Random();
-        Long random = randomId.nextLong(1, 7);
+        Long random = randomId.nextLong(1, 6);
         return continentRepository.findById(random).get();
     }
 }

@@ -25,7 +25,7 @@ public class GameController {
 
 //    TODO: ASK ZSOLT ABOUT HOW TO CREATE A GAME
     @PostMapping
-    public ResponseEntity<Game> createNewGame(@RequestBody Long playerId) {
+    public ResponseEntity<Game> createNewGame(@RequestParam Long playerId) {
         Game newGame = gameService.createNewGame(playerId);
         return new ResponseEntity<>(newGame, HttpStatus.CREATED);
     }
