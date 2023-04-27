@@ -83,17 +83,17 @@ public class GameService {
         return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Game ended. You scored " + game.getScore() + " out of " + game.maxScore() + ".");
     }
 
-    public Game createNewGame(Long playerId){
-//        generate random continent
-        Continent gameContinent = gameListService.getRandomContinent();
-//        find a player by id
-        Player gamePlayer = playerService.getPlayerById(playerId).get();
-//        create game object with found player added
-        Game newGame = new Game(gameContinent, gamePlayer);
+
+    public Reply createNewGame(Long playerId){
+//        create game object with random continent and identified player (using id))
+        Game game = new Game(
+                gameListService.getRandomContinent(),
+                playerService.getPlayerById(playerId).get()
+        );
 //        save the game
-        gameRepository.save(newGame);
-//        return the game
-        return newGame;
+        gameRepository.save(game);
+//        return a reply
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "New game started.");
     }
 
     //find the country by the name

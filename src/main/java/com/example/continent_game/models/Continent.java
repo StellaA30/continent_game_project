@@ -16,18 +16,18 @@ public class Continent {
     @Column
     private String name;
 
-    @JsonIgnoreProperties({"continent"})
+    @JsonIgnoreProperties({"continent", "games"})
     @OneToMany(mappedBy = "continent")
     private List<Country> countries;
 
-    @JsonIgnoreProperties({"continent"})
+    @JsonIgnoreProperties({"continent", "guesses", "player"})
     @OneToMany(mappedBy = "continent")
-    private List<Game> gameList;
+    private List<Game> games;
 
     public Continent (String name){
         this.name = name;
         this.countries = new ArrayList<>();
-        this.gameList = new ArrayList<>();
+        this.games = new ArrayList<>();
     }
     public Continent(){
 
@@ -62,12 +62,12 @@ public class Continent {
         this.countries = countries;
     }
 
-    public List<Game> getGameList() {
-        return gameList;
+    public List<Game> getGames() {
+        return games;
     }
 
-    public void setGameList(List<Game> gameList) {
-        this.gameList = gameList;
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
 //

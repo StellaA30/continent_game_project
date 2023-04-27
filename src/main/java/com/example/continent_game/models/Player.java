@@ -20,7 +20,7 @@ public class Player {
     private String name;
 
     @OneToMany(mappedBy = "player")
-    @JsonIgnoreProperties({"player"})
+    @JsonIgnoreProperties({"player", "continent", "guesses"})
     private List<Game> games;
 
     public Player (String name){

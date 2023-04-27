@@ -24,11 +24,12 @@ public class GameController {
 //          post new game
 
 //    TODO: ASK ZSOLT ABOUT HOW TO CREATE A GAME
-    @PostMapping
-    public ResponseEntity<Game> createNewGame(@RequestParam Long playerId) {
-        Game newGame = gameService.createNewGame(playerId);
-        return new ResponseEntity<>(newGame, HttpStatus.CREATED);
-    }
+@PostMapping
+public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
+    Reply reply = gameService.createNewGame(playerId);
+//        Game newGame = gameService.createNewGame(playerId);
+    return new ResponseEntity<>(reply, HttpStatus.CREATED);
+}
 
 
 //    READ

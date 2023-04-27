@@ -27,6 +27,7 @@ public class Country {
     @Column(name = "population")
     private int population;
 
+    @JsonIgnoreProperties({"countries", "games"})
     @ManyToOne
     @JoinColumn(name = "continent_id", nullable = false)
     private Continent continent;
@@ -35,7 +36,7 @@ public class Country {
 //    create many to many (with game class) - game is the owner
 
 
-    @JsonIgnoreProperties({"guesses"})
+    @JsonIgnoreProperties({"guesses", "continent", "player"})
     @ManyToMany(mappedBy = "guesses")
     private List<Game> games;
 

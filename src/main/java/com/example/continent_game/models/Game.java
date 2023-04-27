@@ -19,26 +19,23 @@ public class Game {
     @Column
     private boolean complete;
 
-
-   @ManyToOne
-   @JoinColumn(name = "continent_id", nullable = false)
+    @JsonIgnoreProperties({"games", "countries"})
+    @ManyToOne
+    @JoinColumn(name = "continent_id", nullable = false)
     private Continent continent;
 
+    @JsonIgnoreProperties({"games"})
     @ManyToOne
     @JoinColumn(name = "player_id", nullable = false)
     private Player player;
 
     //    create many to many (with country class) - game is the owner
 
-    @JsonIgnoreProperties({"games"})
+    @JsonIgnoreProperties({"games", "continent"})
     @ManyToMany
     @JoinTable(name = "guesses",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "country_id")
-
-
-
-
     )
     private List<Country> guesses;
 
