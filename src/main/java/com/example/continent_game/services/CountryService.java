@@ -19,12 +19,6 @@ public class CountryService {
     @Autowired
     ContinentService continentService;
 
-    //Create
-
-//    public Country createCountry(String name, long GDP, String capital, int population, Continent continent) {
-//        Country country = new Country(name, GDP, capital, population, continent);
-//        return countryRepository.save(country);
-//    }
 
     //save country
     public Country addNewCountry(CountryDTO countryDTO){
@@ -45,25 +39,6 @@ public class CountryService {
     }
 
 
-
-
-
-//   TODO: Double check update country
-    //UPDATE
-
-//    public Country updateCountry(Long id, String name, long GDP, String capital, int population) {
-//        Optional<Country> optionalCountry = countryRepository.findById(id);
-//        if (optionalCountry.isPresent()) {
-//            Country country = optionalCountry.get();
-//            country.setName(name);
-//            country.setGDP(GDP);
-//            country.setPopulation(population);
-//            return countryRepository.save(country); //return the updated object.
-//        }
-//
-//        return null; // If the country doesn't exist.
-//    }
-
     public Country updateCountry(Long id, CountryDTO countryDTO){
         Continent continent = continentService.findSingleContinent(countryDTO.getContinentId());
         Country countryLocatedById = countryRepository.findById(id).get();
@@ -77,7 +52,6 @@ public class CountryService {
     }
 
     //Delete
-
     public boolean deleteCountry(Long id) {
         Optional<Country> optionalCountry = countryRepository.findById(id);
         if (optionalCountry.isPresent()) { //check if it is in country object

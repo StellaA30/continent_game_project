@@ -28,39 +28,51 @@ public class GameService {
 
     }
 
-
     public Reply processGuess(Guess guess, Long id) {
-//        Find correct game
+//        1. Find correct game
         Game game = gameRepository.findById(id).get();
-        //countryrepo derived query, full country object easier to compare to than just their name
+
+//        2. CountryRepository derived query, full country object easier to compare to than just their name
         Country guessedCountry = countryRepository.findCountryByNameIgnoreCase(guess.getCountryName());
 
-        //notification for user saying we've already guessed it, pass as String
+//        3. notification for user saying we've already guessed it, pass as String
         if (game.getGuesses().contains(guessedCountry)) {
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've already guessed " + guessedCountry.getName() + ". Have another go!");
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
+                    "You've already guessed " + guessedCountry.getName() + ". Have another go!");
         }
         if (game.getCountriesForGame().contains(guessedCountry)) {
             game.addGuessToGuessesList(guessedCountry);
             game.setScore(game.getScore() + 1);
-            //check if game.getScore() = game.getCountries.size
+
+//         4. check if game.getScore() = game.getCountries.size to end the game if all correct countries have been guessed
             if (game.getScore() == game.maxScore()) {
                 game.setComplete(true);
                 gameRepository.save(game);
-                return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've found all the countries in " + guessedCountry.getContinent().getName() + "! (>^_^)>");//(>^_^)>
+                return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
+                        "You've found all the countries in " + guessedCountry.getContinent().getName() + "! (>^_^)>");//(>^_^)>
             }
-            gameRepository.save(game);//update guess and list
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Correct! " + guessedCountry.getName() + " is a country in " + guessedCountry.getContinent().getName() + ". Can you guess any more?");
+
+//         5. Update guess and list
+            gameRepository.save(game);
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
+                    "Correct! " + guessedCountry.getName() + " is a country in " + guessedCountry.getContinent().getName() + ". Can you guess any more?");
         }
         game.addGuessToGuessesList(guessedCountry);
+
+//         6. Increment penalty count for every wrong guess, and end the game if penalty reaches max
         game.setPenalty(game.getPenalty() + 1);
         if (game.getPenalty() == 5) {
             game.setComplete(true);
             gameRepository.save(game);
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect, game over. You've reached the maximum number of penalties. Your final score was " + game.getScore() + ".");//Q_____Q
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
+                    "Incorrect, game over. You've reached the maximum number of penalties. Your final score was " + game.getScore() + ".");//Q_____Q
         }
+
+//        7. Prompt them how many correct guesses are left, or how many chances you have left
         gameRepository.save(game);
-        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect. " + guessedCountry.getName() + " is not in " + game.getContinent().getName() + ". You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
-        //eg. you could prompt them how many correct guesses are left, or how many chances you have left
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
+                "Incorrect. " + guessedCountry.getName() + " is not in " + game.getContinent().getName() +
+                        ". You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
     }
 
     public Reply terminateGame(Long id){
