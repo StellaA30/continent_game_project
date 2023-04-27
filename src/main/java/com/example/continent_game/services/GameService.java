@@ -18,8 +18,6 @@ public class GameService {
     GameRepository gameRepository;
     @Autowired
     PlayerService playerService;
-    @Autowired
-    CountryService countryService;
 
     @Autowired
     GameListService gameListService;
@@ -28,29 +26,20 @@ public class GameService {
     CountryRepository countryRepository;
 
 
-
-////    //    Array of player's guesses
-//    private ArrayList<Country> guessedCountryList;
-//    //    Total countries within a given continent
-//    private ArrayList<Country> totalCountryList;
-
     public GameService (){
 
     }
 
 
-
     public Reply processGuess(Guess guess, Long id) {
 //        Find correct game
-// Add correct guess to guessedCountryList and increments score by 1 for each correct guess
-// - this is also used when getting the score (size of list)
         Game game = gameRepository.findById(id).get();
         //countryrepo derived query, full country object easier to compare to than just their name
         Country guessedCountry = countryRepository.findCountryByNameIgnoreCase(guess.getCountryName());
 
         //notification for user saying we've already guessed it, pass as String
         if (game.getGuesses().contains(guessedCountry)) {
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), guessedCountry + " is not in " + game.getContinent() + " .");
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've already guessed " + guessedCountry.getName() + ". Have another go!");
         }
         if (game.getCountriesForGame().contains(guessedCountry)) {
             game.addGuessToGuessesList(guessedCountry);
@@ -59,20 +48,20 @@ public class GameService {
             if (game.getScore() == game.maxScore()) {
                 game.setComplete(true);
                 gameRepository.save(game);
-                return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've found all the countries in " + game.getContinent() + "! (>^_^)>");//(>^_^)>
+                return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "You've found all the countries in " + guessedCountry.getContinent().getName() + "! (>^_^)>");//(>^_^)>
             }
             gameRepository.save(game);//update guess and list
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "That's correct! Can you guess any more?");
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Correct! " + guessedCountry.getName() + " is a country in " + guessedCountry.getContinent().getName() + ". Can you guess any more?");
         }
         game.addGuessToGuessesList(guessedCountry);
         game.setPenalty(game.getPenalty() + 1);
         if (game.getPenalty() == 5) {
             game.setComplete(true);
             gameRepository.save(game);
-            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect, game over. You've reached the maximum number of penalties." + game.getScore());//Q_____Q
+            return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect, game over. You've reached the maximum number of penalties. Your final score was " + game.getScore() + ".");//Q_____Q
         }
         gameRepository.save(game);
-        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "That's incorrect. You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Incorrect. " + guessedCountry.getName() + " is not in " + game.getContinent().getName() + ". You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
         //eg. you could prompt them how many correct guesses are left, or how many chances you have left
     }
 
@@ -83,52 +72,21 @@ public class GameService {
         return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "Game ended. You scored " + game.getScore() + " out of " + game.maxScore() + ".");
     }
 
-
     public Reply createNewGame(Long playerId){
 //        create game object with random continent and identified player (using id))
+        Continent continent = gameListService.getRandomContinent();
         Game game = new Game(
-                gameListService.getRandomContinent(),
+                continent,
                 playerService.getPlayerById(playerId).get()
         );
 //        save the game
         gameRepository.save(game);
 //        return a reply
-        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "New game started.");
+        return new Reply(game.getScore(), game.maxScore(), game.getPenalty(), "How many countries can you name in " + continent.getName());
+
+//   TODO: If we were to add a GameMode we would have to add GameMode as a class, pass it into the properties and constructor of Game, and in the GameController and GameServices we need to also have GameMode in the parameter
+//   TODO: Also, in this method, we need to create a variable for gameMode and at the end, when returning and reply, use an if statement (for the mode)
     }
-
-    //find the country by the name
-    //game.getCountries().contains(foundCountry)
-    //game.getGuesses()
-//
-//        Game game = gameRepository.findById(id).get();
-
-////        Check if game is already completed
-//        if (game.isComplete()){
-//            return new Reply(
-//                    false,
-//                    getCurrentWord(),
-//                    guessedCountryList.size() + "/" + totalCountryList.size(),
-//                    String.format("Already finished game %d", game.getId())
-//            );
-//        }
-////        Check if country has been guessed already
-//        if(this.guessedCountryList.contains(guess.getCountryName())){
-//            return new Reply(false, this.currentWord, guessedCountryList.size() + "/"+totalCountryList.size(),String.format("Already guessed %s", guess.getCountryName()));
-//        }
-
-
-
-
-
-//        Handle correct guess
-
-
-
-
-//        Check for win
-//             finalScore - update score property in the game that's being/been played
-
-
 
     //get all games
     public List<Game> getAllGames(){
@@ -140,40 +98,9 @@ public class GameService {
         return gameRepository.findById(id);
     }
 
-    //CREATE: Create/save a new game??
-    // TODO: check if the update is related to the game logic??
-
-
-
-    //UPDATE:  can we update a game -- ask Instructor??
-//    public void updateGame(Game game, Long id){
-//            Game gameToUpdate = gameRepository.findById(id).get();
-//            gameToUpdate.setScore(game.getScore());
-//            gameToUpdate.setComplete(game.isComplete());
-//            gameToUpdate.setContinent(game.getContinent());
-//            gameToUpdate.setPlayer(game.getPlayer());
-//            gameRepository.save(gameToUpdate);
-//        }
-
-
-    //  DELETE:
-//  TODO: check if we need to remove player and continent before deleting game
-    //delete game, logic might change will need to
-    //delete continent object??
-    //delete player object??
     public void deleteGame(Long id){
         gameRepository.deleteById(id);
     }
-
-//    public void removePlayerAndContinentFromGame(Long id){
-//        Player foundPlayer = playerRepository.getById(id);
-//        for (Player player : foundEstate.getPlayers()) {
-//            .removeEstate(foundEstate);
-//    }
-
-
-
-
 
 
 }

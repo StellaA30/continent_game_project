@@ -1,9 +1,6 @@
 package com.example.continent_game.controllers;
 
-import com.example.continent_game.models.Continent;
-import com.example.continent_game.models.Game;
-import com.example.continent_game.models.Player;
-import com.example.continent_game.models.Reply;
+import com.example.continent_game.models.*;
 import com.example.continent_game.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +21,8 @@ public class GameController {
 //          post new game
 
 //    TODO: ASK ZSOLT ABOUT HOW TO CREATE A GAME
-@PostMapping
-public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
+    @PostMapping
+    public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
     Reply reply = gameService.createNewGame(playerId);
 //        Game newGame = gameService.createNewGame(playerId);
     return new ResponseEntity<>(reply, HttpStatus.CREATED);
@@ -58,6 +55,12 @@ public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Reply> endGameEarly(@PathVariable Long id) {
         Reply reply = gameService.terminateGame(id);
+        return new ResponseEntity<>(reply, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{id}")
+    private ResponseEntity<Reply> makeAGuess(@RequestBody Guess guess, @PathVariable Long id) {
+        Reply reply = gameService.processGuess(guess, id);
         return new ResponseEntity<>(reply, HttpStatus.OK);
     }
 
