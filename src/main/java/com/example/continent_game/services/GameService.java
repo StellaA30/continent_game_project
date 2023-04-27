@@ -71,7 +71,7 @@ public class GameService {
 //        7. Prompt them how many correct guesses are left, or how many chances you have left
         gameRepository.save(game);
         return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
-                "Incorrect. " + guessedCountry.getName() + " is not in " + game.getContinent().getName() +
+                "Incorrect. That's not in " + game.getContinent().getName() +
                         ". You have " + String.valueOf(5 - game.getPenalty()) + " chances left.");
     }
 
