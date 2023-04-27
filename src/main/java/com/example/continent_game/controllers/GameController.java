@@ -23,7 +23,6 @@ public class GameController {
     @PostMapping
     public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
     Reply reply = gameService.createNewGame(playerId);
-//        Game newGame = gameService.createNewGame(playerId);
     return new ResponseEntity<>(reply, HttpStatus.CREATED);
 }
 

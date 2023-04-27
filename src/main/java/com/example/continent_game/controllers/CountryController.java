@@ -44,10 +44,6 @@ public class CountryController {
     }
 
 
-
-
-
-
     //UPDATE
     @PutMapping(value = "/{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable Long id,
@@ -55,7 +51,6 @@ public class CountryController {
         Country country = countryService.updateCountry(id, countryDTO);
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
-
 
 
     //DELETE
