@@ -17,8 +17,7 @@ public class ContinentService {
     @Autowired
     ContinentRepository continentRepository;
 
-    @Autowired
-    CountryService countryService;
+
 
     @Autowired
     CountryRepository countryRepository;
@@ -68,6 +67,12 @@ public class ContinentService {
 
     public void removeContinent(Long id){
         continentRepository.deleteById(id);
+    }
+
+
+    // find the continent by id -- to use in the countryService & CountryDTO
+    public Continent findSingleContinent(Long id){
+        return continentRepository.findById(id).get();
     }
 
 

@@ -18,7 +18,7 @@ public class Country {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "GDP")
+    @Column(name = "GDP_per_capita")
     private long GDP;
 
     @Column(name = "capital")

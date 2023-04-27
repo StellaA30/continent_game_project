@@ -17,10 +17,9 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-//    CREATE
-//          post new game
 
-//    TODO: ASK ZSOLT ABOUT HOW TO CREATE A GAME
+
+//    CREATE A NEW GAME
     @PostMapping
     public ResponseEntity<Reply> createNewGame(@RequestParam long playerId) {
     Reply reply = gameService.createNewGame(playerId);
@@ -29,16 +28,13 @@ public class GameController {
 }
 
 
-//    READ
-
-//          get all games
+//    READ: GET ALL GAMES AND GET A GAME BY ID
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> games = gameService.getAllGames();
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
 
-//          get game by id
     @GetMapping(value = "/{id}")
     public ResponseEntity<Game> getGameById(@PathVariable Long id) {
         Optional<Game> game = gameService.getGameById(id);
@@ -51,13 +47,14 @@ public class GameController {
 
 
 //    UPDATE
-//          patch game status (for example if you can't think of any more countries and want to end the game early)
+//  patch game status (for example if you can't think of any more countries and want to end the game early)
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Reply> endGameEarly(@PathVariable Long id) {
         Reply reply = gameService.terminateGame(id);
         return new ResponseEntity<>(reply, HttpStatus.OK);
     }
 
+    // PLAY THE GAME
     @PutMapping(value = "/{id}")
     private ResponseEntity<Reply> makeAGuess(@RequestBody Guess guess, @PathVariable Long id) {
         Reply reply = gameService.processGuess(guess, id);
@@ -65,7 +62,7 @@ public class GameController {
     }
 
 
-//    DELETE
+//    DELETE A GAME
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deletePlayer(@PathVariable Long id) {
         gameService.deleteGame(id);

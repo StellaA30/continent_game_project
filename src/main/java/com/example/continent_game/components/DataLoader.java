@@ -2,8 +2,10 @@ package com.example.continent_game.components;
 
 import com.example.continent_game.models.Continent;
 import com.example.continent_game.models.Country;
+import com.example.continent_game.models.Player;
 import com.example.continent_game.repositories.ContinentRepository;
 import com.example.continent_game.repositories.CountryRepository;
+import com.example.continent_game.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,12 +23,34 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     ContinentRepository continentRepository;
 
+    @Autowired
+    PlayerRepository playerRepository;
+
     public DataLoader() {
 
     }
 
     @Override
     public void run(ApplicationArguments args) {
+
+
+        //CREATE NEW PLAYERS
+        Player player1 = new Player("Katie");
+        playerRepository.save(player1);
+
+        Player player2 = new Player("Khalid");
+        playerRepository.save(player2);
+
+        Player player3 = new Player("Stella");
+        playerRepository.save(player3);
+
+        Player player4 = new Player("Umar");
+        playerRepository.save(player4);
+
+        Player player5 = new Player("Elizabeth");
+        playerRepository.save(player5);
+
+
 
 //  Order:
 //  A) CONTINENTS: Creating them and saving them to the Continent Repo        |   line 45
