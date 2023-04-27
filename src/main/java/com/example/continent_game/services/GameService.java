@@ -3,11 +3,9 @@ package com.example.continent_game.services;
 import com.example.continent_game.models.*;
 import com.example.continent_game.repositories.CountryRepository;
 import com.example.continent_game.repositories.GameRepository;
-import com.example.continent_game.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ public class GameService {
     PlayerService playerService;
 
     @Autowired
-    GameListService gameListService;
+    ContinentRandomService continentRandomService;
 
     @Autowired
     CountryRepository countryRepository;
@@ -74,7 +72,7 @@ public class GameService {
 
     public Reply createNewGame(Long playerId){
 //        create game object with random continent and identified player (using id))
-        Continent continent = gameListService.getRandomContinent();
+        Continent continent = continentRandomService.getRandomContinent();
         Game game = new Game(
                 continent,
                 playerService.getPlayerById(playerId).get()
