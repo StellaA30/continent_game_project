@@ -1,4 +1,25 @@
 # Continent game project
+## Introduction
+
+## Prerequisites
+### Requirements for running back-end game code:
+* Download intellij/VSCode for editing/displaying back-end code (intellij preferrable)
+* For Command Line Tools, it's recommended to download:
+>* Xcode Command line tools (easier terminal control)
+>* Postgres + SQL(for the Game Database and its language)
+>* Oh My Zsh (nicer terminal experience)
+>* Git (for version control)
+>* HomeBrew 15.2 (ease of package management)
+* Other recommended off-the-web downloads include:
+>* Java 17 (back-end code language)
+>* Postman(for the API to mimic the front-end responses)
+>* Postico (for the viewing of Game database information)
+* Using Spring initializr, the recommended dependencies that were incorporated in the back-end code design were:
+>* Spring Web
+>* Spring Boot DevTools
+>* PostgreSQL Driver
+>* Spring Data JPA
+
 
 ## Technology used to create the API:
 In this project the following tech were used:
@@ -181,5 +202,11 @@ This table lists the API endpoints that the user can interact with, along with t
   </tbody>
 </table>
 
-
+## Credits
+### Name: Github Username
+>* Umar Twynam: *ufwtwynam*
+>* Katie Bamford: *klb545*
+>* Stella Annor: *StellaA30*
+>* Elizabeth Alabi: *elialabi*
+>* Khalid Hussein: *MKADH*
 
