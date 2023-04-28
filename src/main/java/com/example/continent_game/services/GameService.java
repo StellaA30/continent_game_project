@@ -49,7 +49,7 @@ public class GameService {
                 game.setComplete(true);
                 gameRepository.save(game);
                 return new Reply(game.getScore(), game.maxScore(), game.getPenalty(),
-                        "You've found all the countries in " + guessedCountry.getContinent().getName() + "! (>^_^)>");//(>^_^)>
+                        "You've found all the countries in " + guessedCountry.getContinent().getName() + "! (>^_^)>");
             }
 
 //         5. Update guess and list
