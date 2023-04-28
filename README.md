@@ -15,3 +15,171 @@ In this project the following tech were used:
 ![final_UML](https://user-images.githubusercontent.com/56633439/235082826-dc91071f-2a12-4d4e-9c38-0fd7fd6ca05e.png)
 ![final_ERD](https://user-images.githubusercontent.com/56633439/235082828-7d35b44c-125d-4175-82d8-07006240a500.png)
 
+
+
+
+## Endpoints
+
+This table lists the API endpoints that the user can interact with, along with their functionality and what information they return.
+
+<table>
+  <thead>
+    <tr>
+      <th>Request</th>
+      <th>URL path: localhost:8080 </th>
+      <th>Body</th>
+      <th>Functionality</th>
+      <th>Information Returned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td>/games?playerId={id}</td>
+      <td></td>
+      <td>Starts a new game for the specified player. (PlayerId is assigned a value in the Param.)</td>
+      <td><code>Reply</code> object containing a <code>currentScore</code>, <code>maxScore</code>, <code>penalty</code>, and a <code>message</code>.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/games</td>
+      <td></td>
+      <td>Gets all games.</td>
+      <td>List of all <code>Game</code> objects.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/games/{id}</td>
+      <td></td>
+      <td>Gets the game with the Id specified.</td>
+      <td>The <code>Game</code> object with the specified Id.</td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td>/games/{id}</td>
+      <td></td>
+      <td>Terminates the game with the Id specified.</td>
+      <td><code>Reply</code> object containing a <code>currentScore</code>, <code>maxScore</code>, <code>penalty</code>, and a <code>message</code>.</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>/games/{id}</td>
+      <td> <strong>Object:</strong> Guess <br><br> <strong>JSON:</strong>
+
+```json
+{
+    "countryName": "[insert guess]"
+}
+```
+
+</td>
+      <td>Submits a guess to the game with the specified Id.</td>
+      <td><code>Reply</code> object containing a <code>currentScore</code>, <code>maxScore</code>, <code>penalty</code>, and a<code>message</code>.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/games/{id}</td>
+      <td></td>
+      <td>Deletes the game with the specified Id.</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/players</td>
+      <td> <strong>Object:</strong> Player <br><br> <strong>JSON:</strong>
+
+```json
+{
+    "name": "[insert player name]"
+}
+```
+
+</td>
+      <td>Creates a new player</td>
+      <td>The <code>Player</code> object that was created.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/players</td>
+      <td></td>
+      <td>Gets all players.</td>
+      <td>List of all <code>Player</code> objects.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/players/{id}</td>
+      <td></td>
+      <td>Gets the player of the Id specified.</td>
+      <td>The <code>Player</code> object with the specified Id.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/players/{id}</td>
+      <td></td>
+      <td>Deletes a player.</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/countries</td>
+      <td><strong>Object:</strong> CountryDTO <br><br> <strong>JSON:</strong>
+
+```json
+{
+    "name": "[insert country name]",
+    "gdp": 0,
+    "capital": "[insert capital]",
+    "population": 0,
+    "countryId": 0
+}
+```
+
+</td>
+      <td>Creates a new country.</td>
+      <td>The <code>Country</code> object with the specified Id.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/countries</td>
+      <td></td>
+      <td>Gets all countries.</td>
+      <td>List of all <code>Country</code> objects.</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td>/countries/{id}</td>
+      <td></td>
+      <td>Gets the country with the Id specified.</td>
+      <td>The <code>Country</code> object with the specified Id.</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>/countries/{id}</td>
+      <td><strong>Object:</strong> CountryDTO <br><br> <strong>JSON:</strong>
+
+```json
+{
+    "name": "[insert country name]",
+    "gdp": 0,
+    "capital": "[insert capital]",
+    "population": 0,
+    "countryId": 0
+}
+```
+
+</td>
+      <td>Updates the country with the specified Id.</td>
+      <td>The <code>Country</code> object that was updated.</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>/countries/{id}</td>
+      <td></td>
+      <td>Deletes the country with the specified Id.</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
