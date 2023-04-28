@@ -38,6 +38,88 @@ In this project the following tech were used:
 ![final_ERD](https://user-images.githubusercontent.com/56633439/235082828-7d35b44c-125d-4175-82d8-07006240a500.png)
 
 
+## Installation
+* To run the code, you will need:
+
+
+     Java 17
+     Postico (for Mac) or pgAdmin (for Windows) for the PostgreSQL database
+     IntelliJ IDEA
+     Postman 
+
+
+* Follow these steps to install and run the code:
+    - Clone the repository to your local machine
+    - Clone the repository to your local machine
+    - Create a new database in your terminal called continent_db.
+    - Go to Spring Boot https://start.spring.io/ and create a "spring initialzr" with the mentioned dependencies.
+    - Open the file in IntelliJ IDEA. 
+    - Update the application.properties file with your database credentials.
+    - Run the ContinentGameApplication class to start the server.
+
+
+## Usage
+
+To play the game, follow these steps:
+
+
+1. In Postman, send a POST request to http://localhost:8080/players to create a new player. Include the following JSON in the request body:
+
+
+```
+{
+  "name": "Your Name"
+}
+````
+
+The response will include a playerId field that you will use in subsequent requests.
+
+
+2. Send a POST request to http://localhost:8080/games?playerId=1 to create a new game for the player. Include the playerId in the request body:
+
+
+The response will include the continent name and a message prompting the player to guess a country in the continent:
+
+```
+How many countries can you name in Africa
+```
+
+3. To guess a country, send a POST request to http://localhost:8080/games/1. Include the playerId and your guess in the request body:
+
+````
+{
+  "Nigeria"
+}
+````
+
+The response will indicate whether your guess was correct or incorrect, and will include the number of correct guesses out of the total number of countries in the continent:
+
+````
+Correct! You've guessed 1 out of 6 for Africa.
+````
+Or
+
+4. Incorrect answer. Have another go. You've guessed 1 out of 6 for Africa.
+````
+
+Incorrect answer. Have another go. You've guessed 1 out of 6 for Africa.
+````
+
+
+
+The response will include your final score:
+````
+Good job! You got 4 out of 6 correct. Your final score was 67%.
+````
+Or
+
+````
+Better luck next time! You got 2 out of 54 correct.
+````
+
+That's all folks! Have fun playing our game.
+
+
 
 
 ## Endpoints
