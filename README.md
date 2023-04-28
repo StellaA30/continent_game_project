@@ -1,5 +1,6 @@
 # Continent game project
 ## Introduction
+This is a game where the aim is to name as many countries in a randomly given continent as possible, if you repeat a guess it won't increase your score or penalty, and if you get 5 wrong guesses the game will end. As a group we decided on a quiz/game, and we were inspired by Geo-guessr, Jetpunk's country guesser and the idea of a world quiz.
 
 ## Prerequisites
 ### Requirements for running back-end game code:
@@ -201,6 +202,13 @@ This table lists the API endpoints that the user can interact with, along with t
     </tr>
   </tbody>
 </table>
+
+## Possible contributions/improvements
+* GameMode 2 - Player to guess the capital city of a random country belonging to a continent
+* GameMode 3 - Player to guess which country has the highest GDP per capita (multiple choice)
+* Adding a countdown timer to raise the stakes
+* Different countries scored differently
+* Alternative answers accepted as correct e.g. USA/United States of America/America
 
 ## Credits
 ### Name: Github Username
