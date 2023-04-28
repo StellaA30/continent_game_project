@@ -10,8 +10,8 @@ In this project the following tech were used:
 
 ## Data Structure of project:
 
-![Spring Data structure](file:///Users/stellaannor/Desktop/Screenshot%202023-04-28%20at%2008.15.27.png)
+![Spring Data structure](https://excalidraw.com/)
 
 ![UML](file:///Users/stellaannor/Desktop/final_UML.png)
 
-![ERD](file:///Users/stellaannor/Desktop/final_ERD.png)
+![ERD]([file:///Users/stellaannor/Desktop/final_ERD.png](https://github.com/StellaA30/continent_game_project/blob/main/ERD%20diagram.png))
