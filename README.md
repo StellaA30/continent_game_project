@@ -13,7 +13,7 @@ This is a game where the aim is to name as many countries in a randomly given co
 >* HomeBrew 15.2 (ease of package management)
 * Other recommended off-the-web downloads include:
 >* Java 17 (back-end code language)
->* Postman(for the API to mimic the front-end responses)
+>* Postman(for the API to mimic the front-end responses and test different API requests)
 >* Postico (for the viewing of Game database information)
 * Using Spring initializr, the recommended dependencies that were incorporated in the back-end code design were:
 >* Spring Web
@@ -22,15 +22,24 @@ This is a game where the aim is to name as many countries in a randomly given co
 >* Spring Data JPA
 
 
-## Technology used to create the API:
-In this project the following tech were used:
-* Spring Boot initializer: `Java`, `version: 3.0.6`, `Mavern`, `Jar Packaging`
-* Dependencies: `Spring Boot DevTools`, `PostgreSQL Driver`,`Spring Data JPA`, `Spring Web`
-* `Java 17`, `IntelliJ IDEA JDK 17`
-*  `PostgreSQL (version 15)`, `Postico` and `Postman` to visualise tables in our database and test different API requests
 
 
 ## Data Structure of project:
+The `models` package consists of 7 classes, 4 of  which are used to define how the classes are mapped to the database:
+1) A `Continent` POJO class for the continents used to play the game
+2) A `Country` POJO class with properties including `name`, `GDP per capita`, `population`, `capital`, and which `continent` it belongs to
+3) A `Game` class for the game information 
+4) 3 `DTOs`: `CountryDTO`, `Reply` to handle the replies when playing the game, `Guess` to handle each country a player guesses for a randomly selected continent
+
+
+
+The `repositories` package consists of 4 repositories including `CountryRepository`, `CountinentRepository`, `GameRepository`, `PlayerRepository`.
+
+The `services` package has 5 classes, namely `ContinentService`, `CountryService`, `PlayerService`, `GameService` to handle game logic, and `ContinentRandomService` which handle the random selection of a continent.
+
+The `controllers` package consists of 3 classes `PlayerController`, `GameController`, `CountryController` which enables you to perform different requests corresponding to the `CRUD` functionalities
+The `DataLoader` in the `components` package is used to pre-populate the `countries`, `continents` and `players` tables in the database.ou may wish to connect to Postico to view the tables in your database.
+
 
 ![Screenshot 2023-04-28 at 08 15 27](https://user-images.githubusercontent.com/56633439/235082783-6bd10530-1522-42fb-9184-200b94d3d109.png)
 
