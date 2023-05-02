@@ -58,9 +58,8 @@ The `DataLoader` in the `components` package is used to pre-populate the `countr
 
 
 * Follow these steps to install and run the code:
-    - Clone the repository to your local machine
-    - Clone the repository to your local machine
-    - Create a new database in your terminal called continent_db.
+    - Clone the repository to your local machine: `git clone https://github.com/StellaA30/continent_game_project.git`.
+    - Create a new database in your terminal called `continent_db`.
     - Go to Spring Boot https://start.spring.io/ and create a "spring initialzr" with the mentioned dependencies.
     - Open the file in IntelliJ IDEA. 
     - Update the application.properties file with your database credentials.
@@ -93,32 +92,32 @@ The response will include the continent name and a message prompting the player 
 How many countries can you name in Africa
 ```
 
-3. To guess a country, send a POST request to http://localhost:8080/games/1. Include the playerId and your guess in the request body:
+3. To guess a country, send a PUT request to http://localhost:8080/games/1. Include the playerId and your guess in the request body:
 
 ````
 {
-  "Nigeria"
+ "countryName": "Nigeria"
 }
 ````
 
 The response will indicate whether your guess was correct or incorrect, and will include the number of correct guesses out of the total number of countries in the continent:
 
 ````
-Correct! You've guessed 1 out of 6 for Africa.
+Correct! You've guessed 1 out of 46 for Africa.
 ````
 Or
 
-4. Incorrect answer. Have another go. You've guessed 1 out of 6 for Africa.
+4. Incorrect answer. Have another go. You've guessed 1 out of 54 for Africa.
 ````
 
-Incorrect answer. Have another go. You've guessed 1 out of 6 for Africa.
+Incorrect answer. Have another go. You've guessed 1 out of 54 for Africa.
 ````
 
 
 
 The response will include your final score:
 ````
-Good job! You got 4 out of 6 correct. Your final score was 67%.
+Good job! You got 4 out of 54 correct. 
 ````
 Or
 
